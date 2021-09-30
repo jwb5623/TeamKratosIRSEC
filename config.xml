@@ -1,4 +1,4 @@
-<!-- TEAM KRATOS Sysmon config file. The gods require sacrifice... from all of us! -->
+<!-- TEAM KRATOS Sysmon config file, IRSEC 2021. The gods require sacrifice... from all of us! -->
 
 <Sysmon schemaversion="4.70">
 	<!-- Check all hashes -->
