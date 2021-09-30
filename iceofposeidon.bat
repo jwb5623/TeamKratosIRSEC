@@ -15,4 +15,4 @@ set /p doitagain="Do you wish to do it again? (Y/N): "
 if %doitagain%==N (goto :Done) else (goto :DoIt)
 
 :Done
-ECHO "Always remember: A Spartan never lets his back hit the ground!"
+ECHO Always remember: A Spartan never lets his back hit the ground!
