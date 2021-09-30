@@ -7,188 +7,174 @@
 	<CheckRecovation/>
 	<EventFiltering>
 		<!-- Sysmon Event ID 1: Process Creation -->
-		<RuleGroup name="" groupRelation="or">
-			<ProcessCreate onmatch="exclude">
-				<!-- Windows -->
-					<!-- Error reporting/telemetry -->
-				<CommandLine condition="begin with">"C:\Windows\system32\wermgr.exe" "-queuereporting_svc"</CommandLine>
-				<CommandLine condition="is">C:\Windows\system32\wermgr.exe -upload</CommandLine>
+		<ProcessCreate onmatch="exclude">
+			<!-- Windows -->
+				<!-- Error reporting/telemetry -->
+			<CommandLine condition="begin with">"C:\Windows\system32\wermgr.exe" "-queuereporting_svc"</CommandLine>
+			<CommandLine condition="is">C:\Windows\system32\wermgr.exe -upload</CommandLine>
 				<CommandLine condition="is">C:\windows\system32\wermgr.exe -queuereporting</CommandLine>
-				<ParentCommandLine condition="is">C:\windows\system32\wermgr.exe -queuereporting</ParentCommandLine>
-					<!-- DLLs -->
-				<CommandLine condition="begin with">C:\Windows\system32\DllHost.exe /Processid</CommandLine>
-					<!-- Search Indexer -->
-				<CommandLine condition="is">C:\Windows\system32\SearchIndexer.exe /Embedding</CommandLine>
-				<ParentImage condition="is">C:\Windows\system32\SearchIndexer.exe</ParentImage>
-					<!-- Edge / Chrome -->
-				<CommandLine condition="begin with">"C:\Program Files (x86)\Microsoft\Edge Dev\Application\msedge.exe" --type=</CommandLine>
-				<CommandLine condition="begin with">"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --type=</CommandLine>
-				<CommandLine condition="begin with">"C:\Program Files\Google\Chrome\Application\chrome.exe" --type=</CommandLine>
-		</RuleGroup>
+			<ParentCommandLine condition="is">C:\windows\system32\wermgr.exe -queuereporting</ParentCommandLine>
+				<!-- DLLs -->
+			<CommandLine condition="begin with">C:\Windows\system32\DllHost.exe /Processid</CommandLine>
+				<!-- Search Indexer -->
+			<CommandLine condition="is">C:\Windows\system32\SearchIndexer.exe /Embedding</CommandLine>
+			<ParentImage condition="is">C:\Windows\system32\SearchIndexer.exe</ParentImage>
+				<!-- Edge / Chrome -->
+			<CommandLine condition="begin with">"C:\Program Files (x86)\Microsoft\Edge Dev\Application\msedge.exe" --type=</CommandLine>
+			<CommandLine condition="begin with">"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --type=</CommandLine>
+			<CommandLine condition="begin with">"C:\Program Files\Google\Chrome\Application\chrome.exe" --type=</CommandLine>
+		</ProcessCreate>
 		
 		
 		<!-- Sysmon Event ID 2: Process Changed File Creation Time -->
-		<RuleGroup name="" groupRelation="or">
-			<FileCreateTime onmatch="include">
-					<!-- Executables shouldn't be changing these. -->
-				<TargetFilename name="T1099" condition="end with">.exe</TargetFilename>
-					<!-- Users shouldn't be changing these. -->
-				<Image name="T1099" condition="begin with">C:\Users</Image>
-			</FileCreateTime>
-		</RuleGroup>
+		<FileCreateTime onmatch="include">
+				<!-- Executables shouldn't be changing these. -->
+			<TargetFilename name="T1099" condition="end with">.exe</TargetFilename>
+				<!-- Users shouldn't be changing these. -->
+			<Image name="T1099" condition="begin with">C:\Users</Image>
+		</FileCreateTime>
 
 
 		<!-- Sysmon Event ID 3: Network Connection -->
-		<RuleGroup name="" groupRelation="or">
-			<NetworkConnect onmatch="include">
-					<!-- Executables & Other Tools -->
-				<Image condition="image">cmd.exe</Image>
-				<Image condition="image">notepad.exe</Image>
-				<Image condition="image">reg.exe</Image>
-					<!-- Ports -->
-				<DestinationPort name="SSH" condition="is">22</DestinationPort>
-				<DestinationPort name="Telnet" condition="is">23</DestinationPort>
-				<DestinationPort name="SMTP" condition="is">25</DestinationPort>
-				<DestinationPort name="WINS" condition="is">42</DestinationPort>
-				<DestinationPort name="DNS" condition="is">53</DestinationPort>
-				<DestinationPort name="HTTP" condition="is">80</DestinationPort>
-				<DestinationPort name="Kerberos" condition="is">88</DestinationPort>
-				<DestinationPort name="NTP" condition="is">123</DestinationPort>
-				<DestinationPort name "RPC" condition="is">135</DestinationPort>
-				<DestinationPort name "NetBIOS" condition="is">137</DestinationPort>
-				<DestinationPort name "NetBIOS" condition="is">138</DestinationPort>
-				<DestinationPort name "NetBIOS" condition="is">139</DestinationPort>
-				<DestinationPort name="IMAP" condition="is">143</DestinationPort>
-				<DestinationPort name="HTTPS" condition="is">443</DestinationPort>
-				<DestinationPort name="Alert,Metasploit" condition="is">444</DestinationPort>
-				<DestinationPort name "SMB" condition="is">445</DestinationPort>
-				<DestinationPort name="LDAP" condition="is">389</DestinationPort>
-				<DestinationPort name="LDAP" condition="is">636</DestinationPort>
-				<DestinationPort name="NTP" condition="is">1023</DestinationPort>
-				<DestinationPort name="WINS" condition="is">1512</DestinationPort>
-				<DestinationPort name="LDAP" condition="is">3268</DestinationPort>
-				<DestinationPort name="LDAP" condition="is">3269</DestinationPort>
-				<DestinationPort name="RDP" condition="is">3389</DestinationPort>
-				<DestinationPort name="VNC" condition="is">5800</DestinationPort>
-				<DestinationPort name="VNC" condition="is">5900</DestinationPort>
-				<DestinationPort name="WinRM" condition="is">5985</DestinationPort>
-			</NetworkConnect>
-		<NetworkConnect onmatch="exclude">
-			<Image condition="end with">iexplore.exe</Image>
+		<NetworkConnect onmatch="include">
+				<!-- Executables & Other Tools -->
+			<Image condition="image">cmd.exe</Image>
+			<Image condition="image">notepad.exe</Image>
+			<Image condition="image">reg.exe</Image>
+				<!-- Ports -->
+			<DestinationPort name="SSH" condition="is">22</DestinationPort>
+			<DestinationPort name="Telnet" condition="is">23</DestinationPort>
+			<DestinationPort name="SMTP" condition="is">25</DestinationPort>
+			<DestinationPort name="WINS" condition="is">42</DestinationPort>
+			<DestinationPort name="DNS" condition="is">53</DestinationPort>
+			<DestinationPort name="HTTP" condition="is">80</DestinationPort>
+			<DestinationPort name="Kerberos" condition="is">88</DestinationPort>
+			<DestinationPort name="NTP" condition="is">123</DestinationPort>
+			<DestinationPort name "RPC" condition="is">135</DestinationPort>
+			<DestinationPort name "NetBIOS" condition="is">137</DestinationPort>
+			<DestinationPort name "NetBIOS" condition="is">138</DestinationPort>
+			<DestinationPort name "NetBIOS" condition="is">139</DestinationPort>
+			<DestinationPort name="IMAP" condition="is">143</DestinationPort>
+			<DestinationPort name="HTTPS" condition="is">443</DestinationPort>
+			<DestinationPort name="Alert,Metasploit" condition="is">444</DestinationPort>
+			<DestinationPort name "SMB" condition="is">445</DestinationPort>
+			<DestinationPort name="LDAP" condition="is">389</DestinationPort>
+			<DestinationPort name="LDAP" condition="is">636</DestinationPort>
+			<DestinationPort name="NTP" condition="is">1023</DestinationPort>
+			<DestinationPort name="WINS" condition="is">1512</DestinationPort>
+			<DestinationPort name="LDAP" condition="is">3268</DestinationPort>
+			<DestinationPort name="LDAP" condition="is">3269</DestinationPort>
+			<DestinationPort name="RDP" condition="is">3389</DestinationPort>
+			<DestinationPort name="VNC" condition="is">5800</DestinationPort>
+			<DestinationPort name="VNC" condition="is">5900</DestinationPort>
+			<DestinationPort name="WinRM" condition="is">5985</DestinationPort>
 		</NetworkConnect>
+	<NetworkConnect onmatch="exclude">
+		<Image condition="end with">iexplore.exe</Image>
+	</NetworkConnect>
 		
 		
-		<!-- Sysmon Event ID 4: Sysmon Service State Changed -->
-			<!-- Nothing here -->
+	<!-- Sysmon Event ID 4: Sysmon Service State Changed -->
+		<!-- Nothing here -->
+	
+	
+	<!-- Sysmon Event ID 5: Process Terminated -->
+	<ProcessTerminate onmatch="include" />
+
+		
+	<!-- Sysmon Event ID 6: Driver Loaded -->
+	<DriverLoad onmatch="exclude">
+		<!-- Log all drivers except if the signature contains Microsoft, Windows, or Intel. -->
+		<Signature condition="contains">microsoft</Signature>
+		<Signature condition="contains">windows</Signature>
+		<Signature condition="contains">Intel </Signature>
+	</DriverLoad>
+		
+	
+	<!-- Sysmon Event ID 7: Image Loaded -->
+	<ImageLoad onmatch="include">
+		<!-- Don't log anything. -->
+	</ImageLoad>
 		
 		
-		<!-- Sysmon Event ID 5: Process Terminated -->
-		<ProcessTerminate onmatch="include" />
-		
-		
-		<!-- Sysmon Event ID 6: Driver Loaded -->
-		<DriverLoad onmatch="exclude">
-			<!-- Log all drivers except if the signature contains Microsoft, Windows, or Intel. -->
-			<Signature condition="contains">microsoft</Signature>
-			<Signature condition="contains">windows</Signature>
-			<Signature condition="contains">Intel </Signature>
-		</DriverLoad>
-		
-		
-		<!-- Sysmon Event ID 7: Image Loaded -->
-		<RuleGroup name="" groupRelation="or">
-			<ImageLoad onmatch="include">
-				<!-- Don't log anything. -->
-			</ImageLoad>
-		</RuleGroup>
-		
-		
-		<!-- Sysmon Event ID 8: CreateRemoteThread -->
-			<!-- Log everything -->
+	<!-- Sysmon Event ID 8: CreateRemoteThread -->
+		<!-- Log everything -->
 
 
-		<!-- Sysmon Event ID 9: RawAccessRead -->
-		<RuleGroup name="" groupRelation="or">
-			<RawAccessRead onmatch="include">
-				<!-- Don't log anything. -->
-			</RawAccessRead>
-		</RuleGroup>
+	<!-- Sysmon Event ID 9: RawAccessRead -->
+	<RawAccessRead onmatch="include">
+			<!-- Don't log anything. -->
+	</RawAccessRead>
+	
+		
+	<!-- Sysmon Event ID 10: ProcessAccess -->
+	<ProcessAccess onmatch="include">
+			<!-- Don't log anything. -->
+	</ProcessAccess>
 		
 		
-		<!-- Sysmon Event ID 10: ProcessAccess -->
-		<RuleGroup name="" groupRelation="or">
-			<ProcessAccess onmatch="include">
-				<!-- Don't log anything. -->
-			</ProcessAccess>
-		</RuleGroup>
+	<!-- Sysmon Event ID 11: FileCreate -->
+	<FileCreate onmatch="include">
+			<!-- Changes to things on startup -->
+		<TargetFilename name="T1165" condition="contains">\Startup\</TargetFilename>
+			<!-- Scripts -->
+		<TargetFilename condition="end with">.bat</TargetFilename>
+		<TargetFilename condition="end with">.cmd</TargetFilename>
+		<TargetFilename condition="end with">.ps1</TargetFilename> 
+		<TargetFilename condition="end with">.sys</TargetFilename>
+		<TargetFilename condition="end with">.scr</TargetFilename>
+		<TargetFilename name="EXE" condition="end with">.exe</TargetFilename>
+			<!-- Drivers -->
+		<TargetFilename condition="begin with">C:\Windows\system32\Drivers</TargetFilename>
+		<TargetFilename condition="begin with">C:\Windows\SysWOW64\Drivers</TargetFilename>
+			<!-- Powershell -->
+		<TargetFilename condition="begin with">C:\Windows\system32\WindowsPowerShell</TargetFilename>
+		<TargetFilename condition="begin with">C:\Windows\SysWOW64\WindowsPowerShell</TargetFilename>
+			<!-- Scheduled Tasks -->
+		<TargetFilename name="T1053" condition="begin with">C:\Windows\Tasks\</TargetFilename>
+		<TargetFilename name="T1053" condition="begin with">C:\Windows\system32\Tasks</TargetFilename>
+		<TargetFilename name="T1053" condition="begin with">C:\Windows\SysWOW64\Tasks</TargetFilename>
+	</FileCreate>
 		
 		
-		<!-- Sysmon Event ID 11: FileCreate -->
-		<RuleGroup name="" groupRelation="or">
-			<FileCreate onmatch="include">
-					<!-- Changes to things on startup -->
-				<TargetFilename name="T1165" condition="contains">\Startup\</TargetFilename>
-					<!-- Scripts -->
-				<TargetFilename condition="end with">.bat</TargetFilename>
-				<TargetFilename condition="end with">.cmd</TargetFilename>
-				<TargetFilename condition="end with">.ps1</TargetFilename> 
-				<TargetFilename condition="end with">.sys</TargetFilename>
-				<TargetFilename condition="end with">.scr</TargetFilename>
-				<TargetFilename name="EXE" condition="end with">.exe</TargetFilename>
-					<!-- Drivers -->
-				<TargetFilename condition="begin with">C:\Windows\system32\Drivers</TargetFilename>
-				<TargetFilename condition="begin with">C:\Windows\SysWOW64\Drivers</TargetFilename>
-					<!-- Powershell -->
-				<TargetFilename condition="begin with">C:\Windows\system32\WindowsPowerShell</TargetFilename>
-				<TargetFilename condition="begin with">C:\Windows\SysWOW64\WindowsPowerShell</TargetFilename>
-					<!-- Scheduled Tasks -->
-				<TargetFilename name="T1053" condition="begin with">C:\Windows\Tasks\</TargetFilename>
-				<TargetFilename name="T1053" condition="begin with">C:\Windows\system32\Tasks</TargetFilename>
-				<TargetFilename name="T1053" condition="begin with">C:\Windows\SysWOW64\Tasks</TargetFilename>
-			</FileCreate>
-		</RuleGroup>
+	<!-- Sysmon Event ID 12/13/14: RegistryEvents -->
+	<RegistryEvent onmatch="include">
+		<TargetObject condition="begin with">HKLM\SYSTEM\CurrentControlSet\Services</TargetObject>
+		<TargetObject condition="begin with">HKLM\SYSTEM\CurrentControlSet\Control</TargetObject>
+		<TargetObject name="T1158" condition="end with">\Hidden</TargetObject>
+	</RegistryEvent>
 		
 		
-		<!-- Sysmon Event ID 12/13/14: RegistryEvents -->
-		<RuleGroup name="" groupRelation="or">
-			<RegistryEvent onmatch="include">
-				<TargetObject condition="begin with">HKLM\SYSTEM\CurrentControlSet\Services</TargetObject>
-				<TargetObject condition="begin with">HKLM\SYSTEM\CurrentControlSet\Control</TargetObject>
-				<TargetObject name="T1158" condition="end with">\Hidden</TargetObject>
-			</RegistryEvent>
-		</RuleGroup>
+	<!-- Sysmon Event ID 15: FileCreateStreamHash -->
 		
 		
-		<!-- Sysmon Event ID 15: FileCreateStreamHash -->
+	<!-- Sysmon Event ID 16: ServiceConfigurationChange -->
 		
 		
-		<!-- Sysmon Event ID 16: ServiceConfigurationChange -->
+	<!-- Sysmon Event ID 17/18: PipeEvents (Pipe Created) -->
 		
 		
-		<!-- Sysmon Event ID 17/18: PipeEvents (Pipe Created) -->
+	<!-- Sysmon Event ID 19/20/21: WmiEvents -->
 		
 		
-		<!-- Sysmon Event ID 19/20/21: WmiEvents -->
-		
-		
-		<!-- Sysmon Event ID 22: DNSEvent (DNS query) -->
-			<!-- Ignoring for now, this can be pretty bulky.. -->
+	<!-- Sysmon Event ID 22: DNSEvent (DNS query) -->
+		<!-- Ignoring for now, this can be pretty bulky.. -->
 			
 			
-		<!-- Sysmon Event ID 23: FileDete (File Delete archived) -->
+	<!-- Sysmon Event ID 23: FileDete (File Delete archived) -->
 		
 		
-		<!-- Sysmon Event ID 24: ClipboardChanged (New content in the clipboard) -->
+	<!-- Sysmon Event ID 24: ClipboardChanged (New content in the clipboard) -->
 		
 		
-		<!-- Sysmon Event ID 25: Process Tampering (Process image change) -->
+	<!-- Sysmon Event ID 25: Process Tampering (Process image change) -->
 		
 		
-		<!-- Sysmon Event ID 26: FileDeteDetected (File Delete logged) -->
+	<!-- Sysmon Event ID 26: FileDeteDetected (File Delete logged) -->
 		
 		
-		<!-- Sysmon Event ID 255: Error -->
-			<!-- Can't be filtered out. -->
+	<!-- Sysmon Event ID 255: Error -->
+
 		
 	</EventFiltering>
 </Sysmon>
