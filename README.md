@@ -1,0 +1,1 @@
+Welcome to TEAM KRATOS! We are Team 3 at RIT's IRSEC competition running October 2nd, 2021. Located here are some of our magical artifacts, helpful guides, and other devices that we shall use in our valiant defense against the gods. For Sparta!
