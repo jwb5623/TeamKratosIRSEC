@@ -3,7 +3,7 @@
 ECHO Welcome, traveler. If you are on Team Kratos, you may proceed. If you are not, please go away. 
 ECHO Kratos blesses you for your compliance.
 
-set /a doitagain=1
+set doitagain=Y
 DOSKEY /LISTSIZE=0
 
 :DoIt:
@@ -12,9 +12,7 @@ set /p thepass="Please enter new password: "
 net user %theuser% %thepass%
 set /p doitagain="Do you wish to do it again? (Y/N): "
 
-if %doitagain%==N (goto :Done) else (
-    set /a doitagain+=1
-    goto :DoIt)
+if %doitagain%==N (goto :Done) else (goto :DoIt)
 
 :Done
-ECHO "Thank you, enjoy IRSEC!"
+ECHO "Always remember: A Spartan never lets his back hit the ground!"
