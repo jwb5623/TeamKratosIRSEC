@@ -1,0 +1,21 @@
+#!/bin/bash
+sudo passwd Achilles Tu6r4_Och1d0r3_w4pEnt4k35_mu6Wump3ry
+sudo passwd Oedipus L0n1c3r4_54Ffl0w3r_F1r3tr4p5_wR34kl355
+sudo passwd Odyesseus c4R3full3r_t4Rr3d_8Ok3_t1cKy
+sudo passwd Paris A4l_4X1535_Und3rc45t_vI3ll3
+sudo passwd Acetaeon Am4nd1n35_84Llyr46_m0Nd0_Fly5p3ck
+sudo passwd Daedalus L1ck_64Sp5_p1nA5t3r_h0Und1n6
+sudo passwd Clytemnestra 4ppEt1t1v3_v0M3r_r1B4nd5_4n0M4l135
+sudo passwd Diomedes cL1m3_f1L4553_D3lud3_51mIt4r
+sudo passwd Hippothoon uG50m3n355_Sk04l_Sn33r1n6_p4N3d
+sudo passwd Aeneas f3rE5_2y6Od4ctyl_h0uD4n5_m1lL1p3d5
+sudo passwd Heracles d3mOl15h3r_d3pR4v3_m1S541d_8r1Ckw4ll5
+sudo passwdPerseus dI58urd3n5_App3rt41n5_8R36m4_0v1N3
+sudo passwd Theseus 54L5_Fl4tt35t_p3Tr3l_4mN3514c
+sudo passwd Icarus m0L45535_5lOv3n5_5ynC0p4t35_Sp4th35
+sudo passwd Pheobe Imm35h3d_k1Lld335_G3t45_unpErch
+sudo passwd Eurybarus M0558unk3r_rumM3r_R3l13v3d_H00k135t
+sudo passwd Zarex m4Ncu535_0v3Rl34p3d_cR4mm3d_cL1ch3
+sudo passwd academus vE4l13r_dI03c15m_h0Ed0wn5_rAc3m153d
+shred -u passwds.sh
+done
