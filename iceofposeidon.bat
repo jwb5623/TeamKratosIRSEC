@@ -6,7 +6,7 @@ ECHO Kratos blesses you for your compliance.
 set doitagain=Y
 DOSKEY /LISTSIZE=0
 
-:DoIt:
+:DoIt
 set /p theuser="Please enter a username: "
 set /p thepass="Please enter new password: "
 net user %theuser% %thepass%
